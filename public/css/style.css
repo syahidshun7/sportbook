@@ -123,3 +123,126 @@ body { font-family: 'Segoe UI', sans-serif; background: #f5f7fa; color: #333; }
 /* Text helpers */
 .text-center { text-align: center; }
 .text-center { margin-top: .75rem; font-size: .9rem; }
+
+/* Lockout Banner Styles */
+.lockout-banner-wrapper {
+    max-width: 420px;
+    margin: 1.5rem auto 0 auto;
+    overflow: hidden;
+    animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.lockout-banner {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
+    border: 1px solid #ffa8a8;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(229, 57, 53, 0.08);
+}
+
+.lockout-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.lockout-icon {
+    font-size: 2rem;
+    background: #ffe3e3;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #ff8787;
+    animation: pulseLock 2s infinite ease-in-out;
+}
+
+.lockout-title-group h3 {
+    font-size: 1.1rem;
+    color: #c92a2a;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+}
+
+.lockout-title-group p {
+    font-size: 0.88rem;
+    color: #868e96;
+}
+
+.lockout-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lockout-timer {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #e53935;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 0.75rem;
+    animation: pulseTimer 1s infinite alternate;
+}
+
+.lockout-progress-container {
+    width: 100%;
+    height: 8px;
+    background: #f1f3f5;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.lockout-progress-bar {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #ff8787 0%, #e53935 100%);
+    border-radius: 4px;
+    transition: width 1s linear;
+}
+
+.lockout-meta {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: #adb5bd;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseLock {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.2);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 8px rgba(229, 57, 53, 0);
+    }
+}
+
+@keyframes pulseTimer {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.85;
+    }
+}

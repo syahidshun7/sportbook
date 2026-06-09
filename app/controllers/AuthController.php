@@ -10,7 +10,13 @@ class AuthController extends Controller {
 
     public function loginForm(): void {
         if (isLoggedIn()) $this->redirect(isAdmin() ? 'admin' : 'venues');
-        $this->view('auth/login', ['error' => flashGet('error'), 'success' => flashGet('success')]);
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $lockout = $this->user->getLockoutDetails($ip);
+        $this->view('auth/login', [
+            'error' => flashGet('error'),
+            'success' => flashGet('success'),
+            'lockout' => $lockout
+        ]);
     }
 
     public function login(): void {

@@ -9,12 +9,79 @@ class User extends Model {
     }
 
     public function isRateLimited(string $email, string $ip): bool {
+        return $this->getLockoutDetails($ip, $email) !== null;
+    }
+
+    public function getLockoutDetails(string $ip, string $email = ''): ?array {
         $cutoff = date('Y-m-d H:i:s', time() - LOGIN_LOCKOUT_TIME);
+        
+        // 1. If email is provided, check if that specific email is rate limited
+        if (!empty($email)) {
+            $stmt = $this->query(
+                "SELECT TIMESTAMPDIFF(SECOND, NOW(), DATE_ADD(attempted_at, INTERVAL ? SECOND)) AS remaining_seconds 
+                 FROM login_attempts 
+                 WHERE email = ? AND attempted_at > ? 
+                 ORDER BY attempted_at DESC LIMIT ?, 1",
+                [LOGIN_LOCKOUT_TIME, $email, $cutoff, MAX_LOGIN_ATTEMPTS - 1]
+            );
+            $row = $stmt->fetch();
+            if ($row && $row['remaining_seconds'] > 0) {
+                return [
+                    'remaining' => (int)$row['remaining_seconds'],
+                    'total' => LOGIN_LOCKOUT_TIME,
+                    'reason' => 'email',
+                    'target' => $email
+                ];
+            }
+        }
+
+        // 2. Check if the IP itself is rate limited
         $stmt = $this->query(
-            "SELECT COUNT(*) FROM login_attempts WHERE (email=? OR ip_address=?) AND attempted_at > ?",
-            [$email, $ip, $cutoff]
+            "SELECT TIMESTAMPDIFF(SECOND, NOW(), DATE_ADD(attempted_at, INTERVAL ? SECOND)) AS remaining_seconds 
+             FROM login_attempts 
+             WHERE ip_address = ? AND attempted_at > ? 
+             ORDER BY attempted_at DESC LIMIT ?, 1",
+            [LOGIN_LOCKOUT_TIME, $ip, $cutoff, MAX_LOGIN_ATTEMPTS - 1]
         );
-        return (int)$stmt->fetchColumn() >= MAX_LOGIN_ATTEMPTS;
+        $row = $stmt->fetch();
+        if ($row && $row['remaining_seconds'] > 0) {
+            return [
+                'remaining' => (int)$row['remaining_seconds'],
+                'total' => LOGIN_LOCKOUT_TIME,
+                'reason' => 'ip',
+                'target' => $ip
+            ];
+        }
+
+        // 3. Check if the most recent attempted email from this IP is rate limited
+        $stmt = $this->query(
+            "SELECT email FROM login_attempts 
+             WHERE ip_address = ? AND attempted_at > ? 
+             ORDER BY attempted_at DESC LIMIT 1",
+            [$ip, $cutoff]
+        );
+        $lastAttempt = $stmt->fetch();
+        if ($lastAttempt && !empty($lastAttempt['email']) && $lastAttempt['email'] !== $email) {
+            $lastEmail = $lastAttempt['email'];
+            $stmt = $this->query(
+                "SELECT TIMESTAMPDIFF(SECOND, NOW(), DATE_ADD(attempted_at, INTERVAL ? SECOND)) AS remaining_seconds 
+                 FROM login_attempts 
+                 WHERE email = ? AND attempted_at > ? 
+                 ORDER BY attempted_at DESC LIMIT ?, 1",
+                [LOGIN_LOCKOUT_TIME, $lastEmail, $cutoff, MAX_LOGIN_ATTEMPTS - 1]
+            );
+            $row = $stmt->fetch();
+            if ($row && $row['remaining_seconds'] > 0) {
+                return [
+                    'remaining' => (int)$row['remaining_seconds'],
+                    'total' => LOGIN_LOCKOUT_TIME,
+                    'reason' => 'email',
+                    'target' => $lastEmail
+                ];
+            }
+        }
+
+        return null;
     }
 
     public function logAttempt(string $email, string $ip): void {

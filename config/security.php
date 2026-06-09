@@ -6,7 +6,7 @@ header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 
 // App constants
-define('BASE_URL', 'http://localhost/Pemrograman_WEB/sportbook/public');
+define('BASE_URL', 'http://localhost/sportbook/public');
 if (!defined('ROOT_PATH')) define('ROOT_PATH', dirname(__DIR__));
 define('UPLOAD_PATH', ROOT_PATH . '/public/uploads');
 

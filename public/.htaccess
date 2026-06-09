@@ -1,6 +1,6 @@
 Options -Indexes
 RewriteEngine On
-RewriteBase /Pemrograman_WEB/sportbook/public/
+RewriteBase /sportbook/public/
 
 # Block access to uploads of PHP files
 RewriteRule ^uploads/.*\.php$ - [F,L]
