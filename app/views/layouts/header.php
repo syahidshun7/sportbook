@@ -89,4 +89,21 @@
     </div>
 </nav>
 
+<!-- HERO BANNER CAROUSEL -->
+<section class="sports-banner">
+    <div class="sports-banner-content">
+        <span class="banner-tag">SPORTBOOK</span>
+
+        <h1>Temukan Arena Terbaik Untuk Bermain</h1>
+
+        <p>
+            Booking lapangan futsal, basket, badminton,
+            tenis dan berbagai venue olahraga lainnya.
+        </p>
+
+        <a href="#venue-list" class="banner-btn">
+            Lihat Venue
+        </a>
+    </div>
+</section>
 <main class="sports-container">

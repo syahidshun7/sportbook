@@ -1082,75 +1082,93 @@ body {
 .input-inline { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
 
+/* ==========================
+   SPORTBOOK HERO BANNER
+========================== */
 
-/* ==========================================
-   HERO CAROUSEL
-========================================== */
+.sports-banner{
+    position:relative;
+    width:100%;
+    height:550px;
 
-.sports-hero-carousel {
-    margin-bottom: 50px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    background:
+    linear-gradient(
+        rgba(0,0,0,.55),
+        rgba(0,0,0,.55)
+    ),
+    url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=80');
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    display:flex;
+    align-items:center;
+
+    margin-bottom:50px;
 }
 
-.hero-image {
-    height: 500px;
-    object-fit: cover;
-    filter: brightness(0.65);
+.sports-banner-content{
+    max-width:650px;
+    padding-left:80px;
+    color:#fff;
 }
 
-.sports-caption {
-    bottom: 25%;
-    text-align: left;
+.banner-tag{
+    display:inline-block;
+    background:#ff4d5a;
+    padding:10px 18px;
+    border-radius:50px;
+    font-weight:600;
+    margin-bottom:20px;
 }
 
-.sports-caption h2 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    text-shadow: 0 3px 10px rgba(0,0,0,0.5);
+.sports-banner-content h1{
+    font-size:56px;
+    line-height:1.1;
+    margin-bottom:20px;
+    font-weight:800;
 }
 
-.sports-caption p {
-    font-size: 1.2rem;
-    max-width: 600px;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+.sports-banner-content p{
+    font-size:20px;
+    line-height:1.6;
+    margin-bottom:30px;
 }
 
-.carousel-indicators button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+.banner-btn{
+    display:inline-block;
+    padding:14px 30px;
+    background:#ff4d5a;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:600;
+    transition:.3s;
 }
 
-.carousel-control-prev,
-.carousel-control-next {
-    width: 6%;
+.banner-btn:hover{
+    background:#ff3444;
+    transform:translateY(-2px);
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-size: 70%;
-}
+/* MOBILE */
 
-/* Mobile */
+@media(max-width:768px){
 
-@media (max-width: 768px) {
-
-    .hero-image {
-        height: 280px;
+    .sports-banner{
+        height:400px;
     }
 
-    .sports-caption {
-        bottom: 15%;
+    .sports-banner-content{
+        padding:25px;
     }
 
-    .sports-caption h2 {
-        font-size: 1.5rem;
+    .sports-banner-content h1{
+        font-size:34px;
     }
 
-    .sports-caption p {
-        font-size: 0.9rem;
+    .sports-banner-content p{
+        font-size:16px;
     }
 }
