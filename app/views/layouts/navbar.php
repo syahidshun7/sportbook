@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArenaSports</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-
 <nav class="sports-navbar">
     <div class="navbar-container">
         <a href="<?= BASE_URL ?>/venues" class="navbar-logo">
@@ -24,9 +12,10 @@
         </label>
 
         <ul class="navbar-menu">
-            <?php if (isLoggedIn()): ?>
+            
+            <?php if (isset($_SESSION['user'])): ?>
                 
-                <?php if (isAdmin()): ?>
+                <?php if (isset($_SESSION['user']['role']) && $_SESSION['user']['role'] === 'admin'): ?>
                     <li>
                         <a href="<?= BASE_URL ?>/admin" class="<?= (strpos($_SERVER['REQUEST_URI'], '/admin') !== false && strpos($_SERVER['REQUEST_URI'], '/venues') === false && strpos($_SERVER['REQUEST_URI'], '/bookings') === false && strpos($_SERVER['REQUEST_URI'], '/payments') === false) ? 'active' : '' ?>">
                             <i class="fa-solid fa-chart-pie"></i> Dashboard
@@ -55,24 +44,25 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= BASE_URL ?>/my-bookings" class="<?= (strpos($_SERVER['REQUEST_URI'], 'my-bookings') !== false) ? 'active' : '' ?>">
-                            <i class="fa-solid fa-calendar-check"></i> Booking Saya
+                        <a href="<?= BASE_URL ?>/history" class="<?= (strpos($_SERVER['REQUEST_URI'], 'history') !== false) ? 'active' : '' ?>">
+                            <i class="fa-solid fa-calendar-check"></i> Riwayat Booking
                         </a>
                     </li>
                 <?php endif; ?>
 
-                <li class="user-dropdown">
-                    <a href="#" class="dropdown-trigger">
-                        <i class="fa-solid fa-circle-user"></i> Halo, <?= e($_SESSION['nama']) ?> <i class="fa-solid fa-chevron-down arrow-icon"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="<?= BASE_URL ?>/logout" class="logout-link">
-                                <i class="fa-solid fa-right-from-bracket"></i> Keluar Aplikasi
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+               <li class="user-dropdown">
+    <a href="javascript:void(0)" class="dropdown-trigger">
+        <i class="fa-solid fa-circle-user"></i> Halo, <?= e($_SESSION['user']['nama']) ?> 
+        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="<?= BASE_URL ?>/logout" class="logout-link">
+                <i class="fa-solid fa-right-from-bracket"></i> Keluar Aplikasi
+            </a>
+        </li>
+    </ul>
+</li>
             
             <?php else: ?>
                 <li>
@@ -85,8 +75,7 @@
                     <a href="<?= BASE_URL ?>/register" class="nav-btn-register">Daftar</a>
                 </li>
             <?php endif; ?>
+
         </ul>
     </div>
 </nav>
-
-<main class="sports-container">

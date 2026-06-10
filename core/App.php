@@ -45,6 +45,7 @@ class App {
         $r->add('POST', 'admin/venues/delete', 'AdminController', 'venueDelete');
         $r->add('GET',  'admin/bookings',      'AdminController', 'bookings');
         $r->add('POST', 'admin/bookings/update','AdminController','bookingUpdate');
+        $r->add('POST', 'admin/bookings/delete','AdminController','bookingDelete');
         $r->add('GET',  'admin/payments',      'AdminController', 'payments');
         $r->add('POST', 'admin/payments/update','AdminController','paymentUpdate');
     }

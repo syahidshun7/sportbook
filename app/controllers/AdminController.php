@@ -30,8 +30,26 @@ class AdminController extends Controller {
     // --- VENUES ---
     public function venues(): void {
         $this->requireAdmin();
-        $venues = $this->venue->findAll();
-        $this->view('admin/venues', ['venues' => $venues, 'error' => flashGet('error'), 'success' => flashGet('success')]);
+        $search  = trim($_GET['search'] ?? '');
+        $status  = $_GET['status'] ?? '';
+        $perPage = 10;
+        $page    = max(1, (int)($_GET['page'] ?? 1));
+        $offset  = ($page - 1) * $perPage;
+
+        $venues     = $this->venue->getFiltered($search, $status, $perPage, $offset);
+        $total      = $this->venue->countFiltered($search, $status);
+        $totalPages = (int)ceil($total / $perPage);
+
+        $this->view('admin/venues', [
+            'venues'     => $venues,
+            'search'     => $search,
+            'status'     => $status,
+            'page'       => $page,
+            'totalPages' => max(1, $totalPages),
+            'total'      => $total,
+            'error'      => flashGet('error'),
+            'success'    => flashGet('success'),
+        ]);
     }
 
     public function venueStore(): void {
@@ -86,8 +104,29 @@ class AdminController extends Controller {
     // --- BOOKINGS ---
     public function bookings(): void {
         $this->requireAdmin();
-        $bookings = $this->booking->getAllWithDetails();
-        $this->view('admin/bookings', ['bookings' => $bookings, 'success' => flashGet('success')]);
+        $search   = trim($_GET['search'] ?? '');
+        $status   = $_GET['status'] ?? '';
+        $venueId  = (int)($_GET['venue_id'] ?? 0);
+        $perPage  = 10;
+        $page     = max(1, (int)($_GET['page'] ?? 1));
+        $offset   = ($page - 1) * $perPage;
+
+        $bookings   = $this->booking->getFiltered($search, $status, $venueId, $perPage, $offset);
+        $total      = $this->booking->countFiltered($search, $status, $venueId);
+        $totalPages = (int)ceil($total / $perPage);
+        $venues     = $this->venue->findAll();
+
+        $this->view('admin/bookings', [
+            'bookings'   => $bookings,
+            'venues'     => $venues,
+            'search'     => $search,
+            'status'     => $status,
+            'venueId'    => $venueId,
+            'page'       => $page,
+            'totalPages' => $totalPages,
+            'total'      => $total,
+            'success'    => flashGet('success'),
+        ]);
     }
 
     public function bookingUpdate(): void {
@@ -98,11 +137,36 @@ class AdminController extends Controller {
         $this->redirect('admin/bookings');
     }
 
+    public function bookingDelete(): void {
+        $this->requireAdmin();
+        verifyCsrf();
+        $this->booking->delete((int)$_POST['id']);
+        flashSet('success', 'Booking berhasil dihapus.');
+        $this->redirect('admin/bookings');
+    }
+
     // --- PAYMENTS ---
     public function payments(): void {
         $this->requireAdmin();
-        $payments = $this->payment->getAll();
-        $this->view('admin/payments', ['payments' => $payments, 'success' => flashGet('success')]);
+        $search  = trim($_GET['search'] ?? '');
+        $status  = $_GET['status'] ?? '';
+        $perPage = 10;
+        $page    = max(1, (int)($_GET['page'] ?? 1));
+        $offset  = ($page - 1) * $perPage;
+
+        $payments   = $this->payment->getFiltered($search, $status, $perPage, $offset);
+        $total      = $this->payment->countFiltered($search, $status);
+        $totalPages = (int)ceil($total / $perPage);
+
+        $this->view('admin/payments', [
+            'payments'   => $payments,
+            'search'     => $search,
+            'status'     => $status,
+            'page'       => $page,
+            'totalPages' => max(1, $totalPages),
+            'total'      => $total,
+            'success'    => flashGet('success'),
+        ]);
     }
 
     public function paymentUpdate(): void {
