@@ -9,6 +9,11 @@ class AdminController extends Controller {
     private Booking $booking;
     private Payment $payment;
 
+    protected function view(string $view, array $data = []): void {
+        extract($data);
+        require_once ROOT_PATH . '/app/views/' . $view . '.php';
+    }
+
     public function __construct() {
         $this->venue   = new Venue();
         $this->booking = new Booking();

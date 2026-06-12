@@ -36,27 +36,26 @@
                     <p style="font-size:.82rem;color:#6b7280;margin:.5rem 0;"><?= e($venue['deskripsi']) ?></p>
                     <?php endif; ?>
                     <?php if (!empty($venue['google_map'])): ?>
-                    <a href="<?= e($venue['google_map']) ?>" target="_blank" rel="noopener" class="gmaps-preview-link">
-                        <div class="gmaps-preview">
-                            <?php
-                            // Extract lat,lng from @lat,lng in URL
-                            preg_match('/@(-?\d+\.\d+),(-?\d+\.\d+)/', $venue['google_map'], $m);
-                            if (!empty($m[1]) && !empty($m[2])):
-                                $embedUrl = "https://maps.google.com/maps?q={$m[1]},{$m[2]}&z=15&output=embed";
-                            else:
-                                $embedUrl = str_replace('/maps/', '/maps/embed/v1/place?key=&', $venue['google_map']);
-                            endif;
-                            ?>
+                    <?php
+                        preg_match('/@(-?\d+\.\d+),(-?\d+\.\d+)/', $venue['google_map'], $m);
+                        $hasCoords = !empty($m[1]) && !empty($m[2]);
+                        $embedUrl = $hasCoords
+                            ? "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d{$m[2]}!3d{$m[1]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sid!2sid!4v0"
+                            : null;
+                    ?>
+                    <div class="gmaps-preview">
+                        <?php if ($hasCoords): ?>
                             <iframe
                                 src="<?= htmlspecialchars($embedUrl) ?>"
-                                width="100%" height="160" style="border:0;border-radius:8px;pointer-events:none;"
+                                width="100%" height="160" style="border:0;border-radius:8px;"
                                 loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
-                            <div class="gmaps-overlay">
-                                <i class="fa-solid fa-map-location-dot"></i> Buka di Google Maps
-                            </div>
-                        </div>
-                    </a>
+                        <?php else: ?>
+                            <a href="<?= e($venue['google_map']) ?>" target="_blank" rel="noopener" class="gmaps-link-btn">
+                                <i class="fa-solid fa-map-location-dot"></i> Lihat di Google Maps
+                            </a>
+                        <?php endif; ?>
+                    </div>
                     <?php endif; ?>
                     <div class="sidebar-price-box">
                         <span class="label">Tarif Lapangan</span>
@@ -105,7 +104,7 @@
                     <button type="submit" class="btn-sports-primary" style="border: none; cursor: pointer;">
                         <span>Konfirmasi Booking</span> <i class="fa-solid fa-chevron-right"></i>
                     </button>
-                    <a href="<?= BASE_URL ?>/venues" class="btn-sports-link">Batal</a>
+                    <a href="<?= BASE_URL ?>/venues" class="btn-sports-link"><i class="fa-solid fa-arrow-left"></i> Batal</a>
                 </div>
             </form>
         </div>

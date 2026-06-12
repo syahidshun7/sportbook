@@ -61,17 +61,10 @@
                     </li>
                 <?php endif; ?>
 
-                <li class="user-dropdown">
-                    <a href="#" class="dropdown-trigger">
-                        <i class="fa-solid fa-circle-user"></i> Halo, <?= e($_SESSION['nama']) ?> <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                <li>
+                    <a href="<?= BASE_URL ?>/logout" class="dropdown-trigger">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar
                     </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="<?= BASE_URL ?>/logout" class="logout-link">
-                                <i class="fa-solid fa-right-from-bracket"></i> Keluar Aplikasi
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             
             <?php else: ?>

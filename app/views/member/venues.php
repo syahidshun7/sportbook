@@ -2,7 +2,7 @@
 </main>
 <section class="sports-banner">
     <div class="sports-banner-content">
-        <span class="banner-tag">SPORTBOOK</span>
+       
 
         <h1>Temukan Arena Terbaik Untuk Bermain</h1>
 
@@ -18,7 +18,7 @@
 </section>
 
 <div class="sports-container">
-<div class="sports-page-header">
+<div id="venue-list" class="sports-page-header">
     <div class="header-title-wrapper">
         <span class="sub-title">TEMUKAN ARENA TERBAIK</span>
         <h2>Daftar Venue Olahraga</h2>

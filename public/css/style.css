@@ -71,8 +71,14 @@ body {
 }
 .venue-search-btn {
     width: auto;
-    padding: 12px 24px;
+    padding: 7px 16px;
+    font-size: 0.85rem;
     white-space: nowrap;
+}
+.venue-search-form .venue-search-btn {
+    width: auto;
+    padding: 7px 16px;
+    font-size: 0.85rem;
 }
 
 .sports-venue-grid {
@@ -88,7 +94,8 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     border: 1px solid #f1f2f6;
-    display: block; /* Menghindari bug penyusutan Weasyprint / layout lama */
+    display: flex;
+    flex-direction: column;
 }
 .sports-venue-card:hover {
     transform: translateY(-8px);
@@ -136,7 +143,9 @@ body {
 
 .sports-venue-info {
     padding: 25px;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 .venue-title {
     font-size: 1.35rem;
@@ -144,12 +153,19 @@ body {
     color: #1e272e;
     margin: 0 0 10px 0;
     line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .venue-address {
     color: #747d8c;
     font-size: 0.9rem;
     margin: 0 0 20px 0;
-    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .venue-address i {
     color: #ff4757;
@@ -161,6 +177,10 @@ body {
     padding: 12px 15px;
     border-radius: 8px;
     margin-bottom: 20px;
+    margin-top: auto;
+}
+.card-action {
+    margin-top: 0;
 }
 .price-label {
     font-size: 0.75rem;
@@ -845,8 +865,9 @@ body {
 .logout-link { color: #dc2626 !important; }
 .logout-link:hover { background: #fef2f2 !important; color: #b91c1c !important; }
 
-.user-dropdown:hover .dropdown-menu { display: block; }
 .user-dropdown:hover .arrow-icon { transform: rotate(180deg); }
+.user-dropdown.open .dropdown-menu { display: block; }
+.user-dropdown.open .arrow-icon { transform: rotate(180deg); }
 
 .navbar-toggle {
     display: none;
@@ -1368,5 +1389,119 @@ body {
 
     .sports-banner-content p{
         font-size:16px;
+    }
+}
+
+/* Google Maps fallback */
+.gmaps-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e4e7eb;
+    border-radius: 8px;
+    color: #0984e3;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.gmaps-link-btn:hover { background: #e8f4fd; }
+
+/* ==========================================================================
+   VENUE CARD MOBILE
+   ========================================================================== */
+@media (max-width: 600px) {
+    .sports-venue-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .sports-venue-card {
+        min-height: unset;
+    }
+}
+
+/* ==========================================================================
+   ADMIN RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+
+    /* Header admin */
+    .sports-page-header {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .sports-page-header h2 {
+        font-size: 1.5rem;
+    }
+    .sports-page-header .btn-sports-primary.btn-sm {
+        width: auto;
+        align-self: flex-start;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    /* Dashboard quick-links */
+    .quick-links {
+        flex-direction: column !important;
+    }
+    .quick-links a {
+        width: 100%;
+    }
+
+    /* Stats grid */
+    .admin-stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Filter bar */
+    .filter-bar {
+        flex-wrap: wrap;
+    }
+    .filter-bar .input-search,
+    .filter-bar .select-inline {
+        flex: 1 1 100%;
+    }
+    .filter-bar .btn-sports-primary,
+    .filter-bar .btn-sports-secondary {
+        flex: 1 1 auto;
+    }
+
+    /* Table scroll */
+    .table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .table th,
+    .table td {
+        padding: 10px 8px;
+        font-size: 0.82rem;
+        white-space: nowrap;
+    }
+    .action-buttons {
+        flex-wrap: nowrap;
+    }
+
+    /* Modal full-width on mobile */
+    .modal-content {
+        max-width: 100%;
+        margin: 0 10px;
+        padding: 20px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    .pagination a {
+        padding: 6px 10px;
+        font-size: 0.8rem;
     }
 }

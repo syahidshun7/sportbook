@@ -7,7 +7,7 @@
                 <div class="footer-socials">
                     <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
                     <a href="#" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
                 </div>
             </div>
@@ -15,10 +15,9 @@
             <div class="footer-section footer-links">
                 <h3>Navigasi</h3>
                 <ul>
-                    <li><a href="<?= BASE_URL ?>/venues"><i class="fa-solid fa-chevron-right"></i> Cari Venue</a></li>
+                    <li><a href="<?= BASE_URL ?>/venues#venue-list"><i class="fa-solid fa-chevron-right"></i> Cari Venue</a></li>
                     <?php if (isLoggedIn()): ?>
-                        <li><a href="<?= BASE_URL ?>/member/history"><i class="fa-solid fa-chevron-right"></i> Riwayat Booking</a></li>
-                        <li><a href="<?= BASE_URL ?>/payment"><i class="fa-solid fa-chevron-right"></i> Konfirmasi Pembayaran</a></li>
+                        <li><a href="<?= BASE_URL ?>/my-bookings"><i class="fa-solid fa-chevron-right"></i> Riwayat Booking</a></li>
                     <?php else: ?>
                         <li><a href="<?= BASE_URL ?>/login"><i class="fa-solid fa-chevron-right"></i> Masuk Akun</a></li>
                         <li><a href="<?= BASE_URL ?>/register"><i class="fa-solid fa-chevron-right"></i> Daftar Member</a></li>

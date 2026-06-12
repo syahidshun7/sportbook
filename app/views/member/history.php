@@ -12,7 +12,7 @@
             <span class="sub-title">AKTIVITAS SAYA</span>
             <h2>Riwayat Booking Saya</h2>
         </div>
-        <a href="<?= BASE_URL ?>/venues" class="btn-sports-primary" style="text-decoration: none; padding: 10px 20px; font-size: 0.9rem;">
+        <a href="<?= BASE_URL ?>/venues#venue-list" class="btn-sports-primary" style="text-decoration: none; padding: 10px 20px; font-size: 0.9rem;">
             <i class="fa-solid fa-plus"></i> <span>Booking Baru</span>
         </a>
     </div>
