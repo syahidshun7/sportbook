@@ -58,7 +58,7 @@
                 
                 <div class="form-group">
                     <label for="loginEmail"><i class="fa-solid fa-envelope"></i> Email</label>
-                    <input type="email" name="email" id="loginEmail" required autofocus class="sports-input" placeholder="nama@email.com" <?= isset($lockout) && $lockout ? 'disabled' : '' ?>>
+                    <input type="email" name="email" id="loginEmail" required autofocus class="sports-input" placeholder="nama@email.com" value="<?= e($old_email ?? '') ?>" <?= isset($lockout) && $lockout ? 'disabled' : '' ?>>
                 </div>
 
                 <div class="form-group">

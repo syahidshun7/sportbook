@@ -9,8 +9,16 @@ class VenueController extends Controller {
     }
 
     public function index(): void {
-        $venues = $this->venue->getActive();
-        $this->view('member/venues', ['venues' => $venues]);
+        $search = trim($_GET['search'] ?? '');
+        $page   = max(1, (int)($_GET['page'] ?? 1));
+        $limit  = 5;
+        $offset = ($page - 1) * $limit;
+
+        $venues = $this->venue->getFiltered($search, 'active', $limit, $offset);
+        $total  = $this->venue->countFiltered($search, 'active');
+        $pages  = (int)ceil($total / $limit);
+
+        $this->view('member/venues', compact('venues', 'search', 'page', 'pages'));
     }
 
     public function show(string $id): void {

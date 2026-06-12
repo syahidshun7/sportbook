@@ -51,11 +51,11 @@
                 <?php endif; ?>
 
                <li class="user-dropdown">
-    <a href="javascript:void(0)" class="dropdown-trigger">
+    <a href="javascript:void(0)" class="dropdown-trigger" id="dropdownTrigger">
         <i class="fa-solid fa-circle-user"></i> Halo, <?= e($_SESSION['user']['nama']) ?> 
         <i class="fa-solid fa-chevron-down arrow-icon"></i>
     </a>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu" id="dropdownMenu">
         <li>
             <a href="<?= BASE_URL ?>/logout" class="logout-link">
                 <i class="fa-solid fa-right-from-bracket"></i> Keluar Aplikasi
@@ -79,3 +79,21 @@
         </ul>
     </div>
 </nav>
+<script>
+(function(){
+    var trigger = document.getElementById('dropdownTrigger');
+    var menu    = document.getElementById('dropdownMenu');
+    if (!trigger || !menu) return;
+    trigger.addEventListener('click', function(e){
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            menu.classList.toggle('open');
+        }
+    });
+    document.addEventListener('click', function(e){
+        if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('open');
+        }
+    });
+})();
+</script>

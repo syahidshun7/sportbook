@@ -27,12 +27,12 @@
                 
                 <div class="form-group">
                     <label for="regNama"><i class="fa-solid fa-id-card"></i> Nama Lengkap</label>
-                    <input type="text" name="nama" id="regNama" required autofocus class="sports-input" placeholder="Contoh: Budi Santoso" value="<?= isset($_POST['nama']) ? e($_POST['nama']) : '' ?>">
+                    <input type="text" name="nama" id="regNama" required autofocus class="sports-input" placeholder="Contoh: Budi Santoso" value="<?= e($old_nama ?? '') ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="regEmail"><i class="fa-solid fa-envelope"></i> Email</label>
-                    <input type="email" name="email" id="regEmail" required class="sports-input" placeholder="nama@email.com" value="<?= isset($_POST['email']) ? e($_POST['email']) : '' ?>">
+                    <input type="email" name="email" id="regEmail" required class="sports-input" placeholder="nama@email.com" value="<?= e($old_email ?? '') ?>">
                 </div>
 
                 <div class="form-row split-2" style="margin-bottom: 0;">

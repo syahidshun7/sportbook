@@ -13,9 +13,10 @@ class AuthController extends Controller {
         $ip = $_SERVER['REMOTE_ADDR'];
         $lockout = $this->user->getLockoutDetails($ip);
         $this->view('auth/login', [
-            'error' => flashGet('error'),
-            'success' => flashGet('success'),
-            'lockout' => $lockout
+            'error'     => flashGet('error'),
+            'success'   => flashGet('success'),
+            'old_email' => flashGet('old_email'),
+            'lockout'   => $lockout
         ]);
     }
 
@@ -35,11 +36,13 @@ class AuthController extends Controller {
         if (!$u || !password_verify($password, $u['password'])) {
             $this->user->logAttempt($email, $ip);
             flashSet('error', 'Email atau password salah.');
+            flashSet('old_email', $email);
             $this->redirect('login');
         }
 
         if ($u['status'] === 'banned') {
             flashSet('error', 'Akun Anda telah dinonaktifkan.');
+            flashSet('old_email', $email);
             $this->redirect('login');
         }
 
@@ -62,7 +65,12 @@ class AuthController extends Controller {
 
     public function registerForm(): void {
         if (isLoggedIn()) $this->redirect('venues');
-        $this->view('auth/register', ['error' => flashGet('error')]);
+        $old = json_decode(flashGet('old') ?? '{}', true);
+        $this->view('auth/register', [
+            'error'     => flashGet('error'),
+            'old_nama'  => $old['nama']  ?? '',
+            'old_email' => $old['email'] ?? '',
+        ]);
     }
 
     public function register(): void {
@@ -74,26 +82,31 @@ class AuthController extends Controller {
 
         if (!$nama || !$email || !$password) {
             flashSet('error', 'Semua field wajib diisi.');
+            flashSet('old', json_encode(['nama' => $nama, 'email' => $email]));
             $this->redirect('register');
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             flashSet('error', 'Format email tidak valid.');
+            flashSet('old', json_encode(['nama' => $nama, 'email' => $email]));
             $this->redirect('register');
         }
 
         if (strlen($password) < 8) {
             flashSet('error', 'Password minimal 8 karakter.');
+            flashSet('old', json_encode(['nama' => $nama, 'email' => $email]));
             $this->redirect('register');
         }
 
         if ($password !== $confirm) {
             flashSet('error', 'Konfirmasi password tidak cocok.');
+            flashSet('old', json_encode(['nama' => $nama, 'email' => $email]));
             $this->redirect('register');
         }
 
         if ($this->user->findByEmail($email)) {
             flashSet('error', 'Email sudah terdaftar.');
+            flashSet('old', json_encode(['nama' => $nama, 'email' => $email]));
             $this->redirect('register');
         }
 

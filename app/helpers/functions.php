@@ -56,3 +56,12 @@ function isLoggedIn(): bool {
 function isAdmin(): bool {
     return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 }
+
+function alertModal(string $type, string $message): void {
+    $GLOBALS['_alert_modal'] = ['type' => $type, 'message' => $message];
+}
+
+function alertModalFromFlash(): void {
+    if ($msg = flashGet('success')) { alertModal('success', $msg); return; }
+    if ($msg = flashGet('error'))   { alertModal('error',   $msg); }
+}

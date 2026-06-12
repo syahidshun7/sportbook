@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="<?= isAdmin() ? 'is-admin' : '' ?>">
 
 <nav class="sports-navbar">
     <div class="navbar-container">
@@ -90,20 +90,41 @@
 </nav>
 
 <!-- HERO BANNER CAROUSEL -->
-<section class="sports-banner">
-    <div class="sports-banner-content">
-        <span class="banner-tag">SPORTBOOK</span>
 
-        <h1>Temukan Arena Terbaik Untuk Bermain</h1>
+<?php
+$_uri = trim($_SERVER['REQUEST_URI'], '/');
+$_base = trim(parse_url(BASE_URL, PHP_URL_PATH) ?? '', '/');
+$_path = $_base ? preg_replace('#^' . preg_quote($_base, '#') . '#', '', '/' . $_uri) : '/' . $_uri;
+$_path = trim($_path, '/');
+?>
 
-        <p>
-            Booking lapangan futsal, basket, badminton,
-            tenis dan berbagai venue olahraga lainnya.
-        </p>
+<?php if (!isAdmin()): ?>
+<nav class="bottom-nav" id="bottomNav">
 
-        <a href="#venue-list" class="banner-btn">
-            Lihat Venue
-        </a>
-    </div>
-</section>
-<main class="sports-container">
+    <a href="<?= BASE_URL ?>/venues" class="bn-item <?= ($_path === '' || $_path === 'venues') ? 'active' : '' ?>">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <?php if (isLoggedIn()): ?>
+    <a href="<?= BASE_URL ?>/my-bookings" class="bn-item <?= (str_starts_with($_path, 'my-bookings')) ? 'active' : '' ?>">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Booking</span>
+    </a>
+    <a href="<?= BASE_URL ?>/logout" class="bn-item bn-item--logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Keluar</span>
+    </a>
+    <?php else: ?>
+    <a href="<?= BASE_URL ?>/login" class="bn-item <?= ($_path === 'login') ? 'active' : '' ?>">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>Masuk</span>
+    </a>
+    <a href="<?= BASE_URL ?>/register" class="bn-item <?= ($_path === 'register') ? 'active' : '' ?>">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Daftar</span>
+    </a>
+    <?php endif; ?>
+
+</nav>
+<?php endif; ?>

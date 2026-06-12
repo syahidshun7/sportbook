@@ -64,7 +64,7 @@
                             </form>
                             
                             <form method="POST" action="<?= BASE_URL ?>/admin/bookings/delete" style="display:inline"
-                                    onsubmit="return confirm('Hapus booking #<?= $b['id'] ?>?')">
+                                    onsubmit="return showConfirm(this,'Hapus booking #<?= $b['id'] ?>? Tindakan ini tidak dapat dibatalkan.')">
                                 <?= csrfField() ?>
                                 <input type="hidden" name="id" value="<?= $b['id'] ?>">
                                 <button type="submit" class="btn-sm btn-danger">Hapus</button>

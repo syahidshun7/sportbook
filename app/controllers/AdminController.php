@@ -60,6 +60,8 @@ class AdminController extends Controller {
             'jenis_olahraga' => trim($_POST['jenis_olahraga']),
             'alamat'         => trim($_POST['alamat']),
             'deskripsi'      => trim($_POST['deskripsi'] ?? ''),
+            'no_telpon'      => trim($_POST['no_telpon'] ?? ''),
+            'google_map'     => trim($_POST['google_map'] ?? ''),
             'harga_per_jam'  => (float)$_POST['harga_per_jam'],
             'status'         => 'active',
         ];
@@ -81,6 +83,8 @@ class AdminController extends Controller {
             'jenis_olahraga' => trim($_POST['jenis_olahraga']),
             'alamat'         => trim($_POST['alamat']),
             'deskripsi'      => trim($_POST['deskripsi'] ?? ''),
+            'no_telpon'      => trim($_POST['no_telpon'] ?? ''),
+            'google_map'     => trim($_POST['google_map'] ?? ''),
             'harga_per_jam'  => (float)$_POST['harga_per_jam'],
             'status'         => $_POST['status'],
         ];

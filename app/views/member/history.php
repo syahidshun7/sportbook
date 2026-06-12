@@ -70,7 +70,7 @@
                                     <span>Upload Bukti</span>
                                 </a>
                                 
-                                <form method="POST" action="<?= BASE_URL ?>/booking/cancel/<?= $b['id'] ?>" style="display:inline; margin:0;" onsubmit="return confirm('Batalkan booking ini?')">
+                                <form method="POST" action="<?= BASE_URL ?>/booking/cancel/<?= $b['id'] ?>" style="display:inline; margin:0;" onsubmit="return showConfirm(this,'Batalkan booking ini?')">
                                     <?= csrfField() ?>
                                     <button type="submit" class="btn-sports-sm" style="background: #ff4757; border: none; cursor: pointer; padding: 8px 12px;">
                                         <i class="fa-solid fa-trash-can" style="margin: 0; color: #fff;"></i>

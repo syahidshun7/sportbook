@@ -29,6 +29,35 @@
                 <div class="mini-card-body">
                     <h3><?= e($venue['nama']) ?></h3>
                     <p class="sidebar-address"><i class="fa-solid fa-location-dot"></i> <?= e($venue['alamat']) ?></p>
+                    <?php if (!empty($venue['no_telpon'])): ?>
+                    <p class="sidebar-address"><i class="fa-solid fa-phone"></i> <?= e($venue['no_telpon']) ?></p>
+                    <?php endif; ?>
+                    <?php if (!empty($venue['deskripsi'])): ?>
+                    <p style="font-size:.82rem;color:#6b7280;margin:.5rem 0;"><?= e($venue['deskripsi']) ?></p>
+                    <?php endif; ?>
+                    <?php if (!empty($venue['google_map'])): ?>
+                    <a href="<?= e($venue['google_map']) ?>" target="_blank" rel="noopener" class="gmaps-preview-link">
+                        <div class="gmaps-preview">
+                            <?php
+                            // Extract lat,lng from @lat,lng in URL
+                            preg_match('/@(-?\d+\.\d+),(-?\d+\.\d+)/', $venue['google_map'], $m);
+                            if (!empty($m[1]) && !empty($m[2])):
+                                $embedUrl = "https://maps.google.com/maps?q={$m[1]},{$m[2]}&z=15&output=embed";
+                            else:
+                                $embedUrl = str_replace('/maps/', '/maps/embed/v1/place?key=&', $venue['google_map']);
+                            endif;
+                            ?>
+                            <iframe
+                                src="<?= htmlspecialchars($embedUrl) ?>"
+                                width="100%" height="160" style="border:0;border-radius:8px;pointer-events:none;"
+                                loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                            <div class="gmaps-overlay">
+                                <i class="fa-solid fa-map-location-dot"></i> Buka di Google Maps
+                            </div>
+                        </div>
+                    </a>
+                    <?php endif; ?>
                     <div class="sidebar-price-box">
                         <span class="label">Tarif Lapangan</span>
                         <p><?= formatRupiah($venue['harga_per_jam']) ?> <span class="unit">/ jam</span></p>
